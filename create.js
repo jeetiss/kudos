@@ -18,8 +18,14 @@ import { createElement } from 'react'
 import DOM from 'react-dom'
 import App from '../${path}'
 
-const point = document.querySelector('${getFilename(path)}')
-DOM.render(createElement(App), point)
+const points = Array.from(document.querySelectorAll('#${getFilename(path)}'))
+
+points.forEach(point => {
+  const props = JSON.parse(point.dataset.props || '{}')
+
+  DOM.render(createElement(App, props), point)
+})
+
 `;
 
 const isFile = source => !lstatSync(source).isDirectory();
@@ -60,15 +66,38 @@ const main = () => {
     mode: "development",
     context: __dirname,
     entry,
+
     output: {
       path: resolve(OUTPUT_PATH),
       filename: "[name].js",
       publicPath: PUBLIC_PATH
+    },
+
+    optimization: {
+      splitChunks: {
+        chunks: "all"
+      }
     }
   };
 
   const compiler = webpack(config, (err, stats) => {
-    console.log(err, stats);
+    console.log();
+    console.log();
+    console.log();
+
+    Array.from(stats.compilation.entrypoints.entries()).map(([name, entry]) => {
+      const files = entry.chunks
+        .map(chunk =>
+          chunk.files.map(file => join(PUBLIC_PATH, OUTPUT_PATH, file))
+        )
+        .flat(1);
+
+      console.log(name, files);
+    });
+
+    console.log();
+    console.log();
+    console.log();
   });
 
   // compiler.run((err, stats) => {

@@ -2,12 +2,11 @@ import { createElement } from "react";
 import pretty from "pretty-bytes";
 import Count from "../components/count";
 
-export default ({ vr } = {}) =>
+export default ({ number }) =>
   createElement(
     "div",
     {},
-    "Hello ",
-    vr,
-    pretty(1200),
+    "price: ",
+    pretty(number),
     createElement(Count, { initial: 10 })
   );
