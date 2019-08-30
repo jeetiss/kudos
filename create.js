@@ -9,7 +9,7 @@ const {
 const webpack = require("webpack");
 
 const OUTPUT_PATH = "./dist";
-const PUBLIC_PATH = __dirname;
+const PUBLIC_PATH = './dist/';
 
 const getFilename = path => basename(path, ".js");
 
@@ -59,8 +59,6 @@ const createEntries = path => {
 
 const main = () => {
   const entry = createEntries("./src/templates");
-
-  console.log(entry);
 
   const config = {
     mode: "development",
