@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^4.39.3"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "@uploadcare/react-widget": "^0.2.1",
